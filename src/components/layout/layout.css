@@ -2,6 +2,8 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  background-color: #c5c0ab;
 }
 body {
   margin: 0;

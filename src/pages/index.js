@@ -1,22 +1,83 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
+import Img from "gatsby-image"
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import { RichText } from "prismic-reactjs"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+import Layout from "../components/layout/LayOut"
+import { HeroImage } from "../components/homepage/HeroImage"
+import { FeaturedProducts } from "../components/homepage/FeaturedProducts"
 
-export default IndexPage
+//shopify hooks
+import { ExampleUseCart } from "../components/hooks/useCart"
+import { ExampleUseAddItemsToCart } from "../components/hooks/addItemToCart"
+import { ExampleUseCartCount } from "../components/hooks/cartCount"
+
+import { App } from "../components/context/shopifyContext"
+
+export const query = graphql`
+  query MyQuery {
+    prismicHomepageBodyHerotopsection {
+      items {
+        image {
+          localFile {
+            childImageSharp {
+              fluid {
+                srcWebp
+              }
+            }
+          }
+        }
+        rich_text {
+          text
+        }
+        title {
+          text
+        }
+      }
+    }
+    allShopifyCollection(filter: { title: { eq: "protoOne homepage" } }) {
+      nodes {
+        products {
+          handle
+          vendor
+          variants {
+            priceV2 {
+              amount
+              currencyCode
+            }
+            shopifyId
+            sku
+            title
+          }
+          description
+          descriptionHtml
+          images {
+            localFile {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+          }
+          title
+        }
+        title
+      }
+    }
+  }
+`
+
+export default function Home({ data }) {
+  console.log(data)
+  if (!data) return null
+  return (
+    <App>
+      <Layout>
+        <HeroImage />
+        <FeaturedProducts data={data} />
+      </Layout>
+    </App>
+  )
+}

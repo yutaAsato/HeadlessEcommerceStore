@@ -1,0 +1,91 @@
+{
+  "Main": {
+    "uid": {
+      "type": "UID",
+      "config": {
+        "label": "HomePage"
+      }
+    },
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "labels": {
+          "homepagetopsection": [],
+          "productlistsection": [],
+          "herotopsection": [],
+          "lowersection": []
+        },
+        "choices": {
+          "herotopsection": {
+            "type": "Slice",
+            "fieldset": "HeroTopSection",
+            "description": "Hero Top Section",
+            "icon": "account_balance",
+            "display": "grid",
+            "non-repeat": {},
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "image"
+                }
+              },
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2",
+                  "label": "title"
+                }
+              },
+              "rich_text": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph",
+                  "label": "rich text"
+                }
+              }
+            }
+          },
+          "productlistsection": {
+            "type": "Slice",
+            "fieldset": "ProductListSection",
+            "description": "ProductList",
+            "icon": "account_balance",
+            "display": "grid",
+            "non-repeat": {
+              "nonrepeatproductlist": {
+                "type": "IntegrationFields",
+                "config": {
+                  "catalog": "protoone--shopify_store_protoone",
+                  "label": "nonRepeatProductList"
+                }
+              }
+            },
+            "repeat": {
+              "product_list_shopify": {
+                "type": "IntegrationFields",
+                "config": {
+                  "catalog": "protoone--shopify_store_protoone",
+                  "label": "Product List Shopify",
+                  "placeholder": "product list from shopify"
+                }
+              }
+            }
+          },
+          "lowersection": {
+            "type": "Slice",
+            "fieldset": "LowerSection",
+            "description": "LowerSection",
+            "icon": "account_balance",
+            "display": "grid",
+            "non-repeat": {},
+            "repeat": {}
+          }
+        }
+      }
+    }
+  }
+}

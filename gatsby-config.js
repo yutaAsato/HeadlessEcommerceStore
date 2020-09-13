@@ -5,6 +5,8 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    `gatsby-plugin-remove-trailing-slashes`,
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -27,6 +29,40 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-source-prismic`,
+      options: {
+        repositoryName: "protoone",
+        schemas: {
+          homepage: require("./src/custom_types/homePage.json"),
+          single_product: require("./src/custom_types/singleProduct.json"),
+        },
+        shouldDownloadImage: ({ node, key, value }) => {
+          // Return true to download the image or false to skip.
+          return true
+        },
+      },
+    },
+    {
+      resolve: `gatsby-theme-shopify-manager`,
+      options: {
+        shopName: "noavailapparel.com",
+        accessToken: "c145643f84a63da1d9f45106fc068908",
+        // shouldIncludeSourcePlugin: false, // default
+        // shouldWrapRootElementWithProvider: false, // default
+      },
+    },
+    // {
+    //   resolve: `gatsby-plugin-remote-images`,
+    //   options: {
+    //     nodeType: `PrismicProducts`,
+    //     imagePath: `nodes[].data.body[].items[].shopify_product.image.src`,
+    //     // OPTIONAL: Name you want to give new image field on the node.
+    //     // Defaults to 'localImage'.
+    //     // name: "allItemImages",
+    //   },
+    // },
+
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
