@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { Styled, jsx } from "theme-ui"
+
 import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
@@ -12,18 +15,16 @@ import { ProductCard } from "../shared/ProductCard"
 export const FeaturedProducts = (data, productType) => {
   const products = data.data.allShopifyCollection.nodes[0].products
 
-  console.log("featurerdProducts:", products)
-
-  console.log(productType)
+  // console.log("featurerdProducts:", products)
 
   return (
     <FeaturedContainer>
       <TextWrapper>
-        <span>FEATURED PRODUCTS</span>
+        <Styled.h2 sx={{ color: `primary` }}>FEATURED PRODUCTS</Styled.h2>
       </TextWrapper>
       <ProductListWrapper>
         <ProductListItems>
-          <ProductCard products={products} />
+          <ProductCard products={products} productType={"featured"} />
         </ProductListItems>
       </ProductListWrapper>
     </FeaturedContainer>
@@ -38,11 +39,10 @@ const FeaturedContainer = styled.div`
   height: 100%;
   justify-content: center;
   margin-top: 8.2rem;
-  /* margin-top: -200px; */
 `
 const TextWrapper = styled.div`
   font-weight: bold;
-  margin-top: -100px;
+  margin-top: -60px;
 `
 const ProductListWrapper = styled.div`
   display: flex;
@@ -50,6 +50,4 @@ const ProductListWrapper = styled.div`
   width: 100%;
   justify-content: center;
 `
-const ProductListItems = styled.div`
-  /* width: 100%; */
-`
+const ProductListItems = styled.div``

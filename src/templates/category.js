@@ -20,15 +20,19 @@ const CategoryPage = ({ data: { allShopifyProduct: product } }) => {
 
   return (
     <Layout>
-      <h1>This is the {product.nodes[0].productType} page</h1>
       <FeaturedContainer>
         <TextWrapper>
-          <span>FEATURED PRODUCTS</span>
+          <Styled.h3 sx={{ color: `primary` }}>
+            {product.nodes[0].productType.toUpperCase()}
+          </Styled.h3>
+          <Styled.p>
+            Browse our top {product.nodes[0].productType} picks
+          </Styled.p>
         </TextWrapper>
         <ProductListWrapper>
           <ProductListItems>
             <ProductCard
-              products={product}
+              products={product.nodes}
               productType={product.nodes[0].productType}
             />
           </ProductListItems>
@@ -83,6 +87,8 @@ export const CategoryPageQuery = graphql`
 `
 
 const FeaturedContainer = styled.div`
+  /* max-width: 500px; */
+
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -93,8 +99,11 @@ const FeaturedContainer = styled.div`
   /* margin-top: -200px; */
 `
 const TextWrapper = styled.div`
+  width: 100%;
+  justify-content: center;
   font-weight: bold;
-  margin-top: -100px;
+  text-align: center;
+  /* margin-top: -100px; */
 `
 const ProductListWrapper = styled.div`
   display: flex;

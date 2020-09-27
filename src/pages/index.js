@@ -1,19 +1,17 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
-
 import { RichText } from "prismic-reactjs"
 
+//components
+import { FeaturedProducts } from "../components/homepage/FeaturedProducts"
 import Layout from "../components/layout/LayOut"
 import { HeroImage } from "../components/homepage/HeroImage"
-import { FeaturedProducts } from "../components/homepage/FeaturedProducts"
-
-//shopify hooks
-import { ExampleUseCart } from "../components/hooks/useCart"
-import { ExampleUseAddItemsToCart } from "../components/hooks/addItemToCart"
-import { ExampleUseCartCount } from "../components/hooks/cartCount"
+import { Category } from "../components/homepage/Category"
 
 import { App } from "../components/context/shopifyContext"
+
+//===========================================================
 
 export const query = graphql`
   query MyQuery {
@@ -66,17 +64,43 @@ export const query = graphql`
         title
       }
     }
+    apparel: shopifyCollection(title: { eq: "apparel" }) {
+      image {
+        localFile {
+          childImageSharp {
+            fluid(maxWidth: 1600, quality: 100) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+      title
+    }
+    studio: shopifyCollection(title: { eq: "studio" }) {
+      image {
+        localFile {
+          childImageSharp {
+            fluid(maxWidth: 1000, quality: 100) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+      title
+    }
   }
 `
+//========================================================
 
 export default function Home({ data }) {
-  console.log(data)
+  console.log("INDEX:", data)
   if (!data) return null
   return (
     <App>
       <Layout>
         <HeroImage />
         <FeaturedProducts data={data} />
+        {/* <Category apparel={data.apparel} studio={data.studio} /> */}
       </Layout>
     </App>
   )

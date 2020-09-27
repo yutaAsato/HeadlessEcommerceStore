@@ -9,17 +9,17 @@ import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
 //shopify
-import { Grid, Button } from "theme-ui"
+import { Grid, Button, Styled } from "theme-ui"
 import { useAddItemToCart, useCartCount } from "gatsby-theme-shopify-manager"
 
 import { Link } from "../link"
 
 //===============================================================
 
-export const ProductCard = (products, { productType }) => {
+export const ProductCard = products => {
   console.log(products)
 
-  console.log(productType)
+  console.log(products.productType)
 
   ///shopify
   const cartCount = useCartCount()
@@ -40,30 +40,53 @@ export const ProductCard = (products, { productType }) => {
     }
   }
 
+  // console.log(products.productType)
+
   return (
     <>
-      <ProductContainer>
+      {/* <Grid gap={2} columns={12}> */}
+      <ProductContainer tablet="tablet" laptop="laptop">
         {products.products.map(product => (
-          <div style={{ padding: `0 20px 0 20px` }}>
+          <ProductCardContainerWrapper>
             <Link url={`/product/${product.handle}`}>
-              <ProductCardContainer>
+              <ProductCardContainer tablet="tablet" phone="phone">
                 <ProductImageWrapper>
                   <ImageOverlay />
                   <ProductImage>
-                    <Img
-                      fluid={product.images[0].localFile.childImageSharp.fluid}
-                    />
+                    {products.productType === "featured" ? (
+                      <Img
+                        fluid={
+                          product.images[0].localFile.childImageSharp.fluid
+                        }
+                      />
+                    ) : (
+                      <Img
+                        fluid={
+                          product.variants[0].image.localFile.childImageSharp
+                            .fluid
+                        }
+                      />
+                    )}
                   </ProductImage>
                 </ProductImageWrapper>
                 <ProductDetailsWrapper>
-                  <ProductTitle>
-                    <span>{product.title}</span>
+                  <ProductTitle
+                  // desktop="desktop"
+                  // smallDesktop="smallDesktop"
+                  // laptop="laptop"
+                  // phone="phone"
+                  >
+                    <Styled.h4 sx={{ color: "pink" }}>
+                      {product.title}
+                    </Styled.h4>
                   </ProductTitle>
                   <ProductVendor>
-                    <span>{product.vendor}</span>
+                    <Styled.h5>{product.vendor}</Styled.h5>
                   </ProductVendor>
                   <ProductPrice>
-                    <span>{product.variants[0].priceV2.amount}</span>
+                    <Styled.h5>
+                      {product.variants[0].priceV2.amount} USD
+                    </Styled.h5>
                   </ProductPrice>
                   <ProductDescription>
                     {/* <Button
@@ -77,30 +100,82 @@ export const ProductCard = (products, { productType }) => {
                 </ProductDetailsWrapper>
               </ProductCardContainer>
             </Link>
-          </div>
+          </ProductCardContainerWrapper>
         ))}
       </ProductContainer>
+      {/* </Grid> */}
     </>
   )
 }
 
+//================================================
+
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
 const ProductContainer = styled.div`
-  display: flex;
-  margin: auto 50px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  ${props =>
+    props.laptop &&
+    media[props.laptop](`
+
+
+    grid-template-columns: repeat(2, 1fr);
+  `)}
+
+  ${props =>
+    props.tablet &&
+    media[props.tablet](`
+
+    grid-template-columns: 1fr;
+  `)}
+`
+
+const ProductCardContainerWrapper = styled.div`
+  padding: 0 46px 0 46px;
 `
 
 const ProductCardContainer = styled.div`
   width: 100%;
+
+  max-height: 520px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* border-style: solid; */
   position: relative;
 
-  /* box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
     0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
     0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-    0 100px 80px rgba(0, 0, 0, 0.12); */
+    0 100px 80px rgba(0, 0, 0, 0.12);
 
   min-height: 200px;
   margin: 100px auto;
@@ -113,12 +188,25 @@ const ProductCardContainer = styled.div`
         0 8px 12px -4px rgba(130, 136, 148, 0.24);
     }
   }
+
+  ${props =>
+    props.tablet &&
+    media[props.tablet](`
+
+width: 30rem;
+height: 80rem;
+  `)}
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+
+width: 20rem;
+height: 30rem;
+  `)}
 `
 
 const ProductImageWrapper = styled.div`
   position: relative;
-  padding: 40px;
-  /* width: 100%; */
 `
 
 const ImageOverlay = styled.div`
@@ -144,26 +232,26 @@ const ImageOverlay = styled.div`
 `
 
 const ProductImage = styled.div`
-  width: 250px;
+  /* width: 250px; */
 `
 const ProductDetailsWrapper = styled.div`
   width: 100%;
   position: relative;
   padding-top: 12px;
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between;
 
-  @media screen and (min-width: 1000px) {
+  /* @media screen and (min-width: 1000px) {
     padding: 15px 25px 20px 25px;
-  }
+  } */
 `
 
 const ProductTitle = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 0.5rem;
+  height: 3rem;
 `
 
 const ProductVendor = styled.div`

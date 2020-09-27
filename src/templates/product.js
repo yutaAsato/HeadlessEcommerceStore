@@ -130,18 +130,12 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
 
           <ProductDetailsContainer>
             <Styled.h1 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h1>
-            <div
+            <Styled.p
+              sx={{ pt: `40px` }}
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
             />
             <div>
               <Grid padding={2} columns={2}>
-                {/* <OptionPicker
-                key="Color"
-                name="Color"
-                options={colors}
-                selected={color}
-                onChange={event => setColor(event.target.value)}
-              /> */}
                 {pageContext.productType === "apparel" ? (
                   <OptionPicker
                     key="Size"
@@ -153,13 +147,14 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
                 ) : null}
               </Grid>
             </div>
-            <Button
-              variant="secondary"
-              sx={{ margin: 2, display: "block", color: "primary" }}
-              onClick={handleAddToCart}
-            >
-              Add to Cart
-            </Button>
+            <div style={{ paddingTop: `20px` }}>
+              <Button
+                sx={{ margin: 2, display: "block" }}
+                onClick={handleAddToCart}
+              >
+                Add to Cart
+              </Button>
+            </div>
           </ProductDetailsContainer>
         </Grid>
       </ProductPageContainer>
@@ -215,7 +210,7 @@ const ProductPageContainer = styled.div`
 `
 
 const ProductImageWrapper = styled.div`
-  grid-column: 4;
+  grid-column: 3;
 
   width: 100%;
   display: flex;
@@ -258,10 +253,10 @@ const ProductImageOverlay = styled.div`
 `
 
 const ProductImage = styled.div`
-  width: 500px;
+  width: 600px;
 `
 
 const ProductDetailsContainer = styled.div`
   /* padding-top: 8rem; */
-  grid-column: 7 / span 4;
+  grid-column: 6 / span 5;
 `

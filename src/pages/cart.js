@@ -7,6 +7,7 @@ import { Link } from "../components/link"
 import Layout from "../components/layout/LayOut"
 import { useStaticQuery, graphql } from "gatsby"
 import {
+  useCart,
   useCartItems,
   useCartTotals,
   useAddItemToCart,
@@ -50,12 +51,13 @@ const CartPage = () => {
   `)
 
   const lineItems = useCartItems()
+  const cart = useCart()
   // const { tax, total } = useCartTotals()
   const removeFromCart = useRemoveItemFromCart()
   const checkout = useCheckoutUrl()
   const addItemToCart = useAddItemToCart()
 
-  console.log(lineItems)
+  console.log(cart.totalPrice)
 
   //===========================================================
 
@@ -140,36 +142,24 @@ const CartPage = () => {
 
   //empty cart
   const emptyCart = (
-    <Layout>
-      {/* <SEO title="Cart" /> */}
+    <div style={{ paddingTop: `10rem` }}>
       <Styled.h1>Cart</Styled.h1>
       <Styled.p>Your shopping cart is empty.</Styled.p>
-      <Button
-        sx={{ mt: 4 }}
-        onClick={() =>
-          addItemToCart(
-            variants[Math.floor(Math.random() * (variants.length - 1))]
-              .shopifyId,
-            1
-          )
-        }
-      >
-        <span role="img" aria-label="Dice Emoji">
-          🎲
-        </span>{" "}
-        Random item plz
-      </Button>
-    </Layout>
+    </div>
   )
 
   //==========================================================
 
   return lineItems.length < 1 ? (
-    emptyCart
+    <Layout>
+      <Grid gap={2} column={12}>
+        <div style={{ gridColumn: `3/ span 8` }}>{emptyCart}</div>
+      </Grid>
+    </Layout>
   ) : (
     <Layout>
       <Grid gap={2} columns={12}>
-        <MainCartWrapper>
+        <MainCartWrapper tablet="tablet" phone="phone">
           {/* <SEO title="Cart" /> */}
           <Styled.h1>Cart</Styled.h1>
           {lineItems.map(item => (
@@ -178,27 +168,19 @@ const CartPage = () => {
               <Divider sx={{ my: 3 }} />
             </React.Fragment>
           ))}
+
           <div sx={{ display: "flex" }}>
-            <Card sx={{ marginLeft: "auto", minWidth: "10rem", p: 4 }}>
+            <Card sx={{ marginLeft: "auto", minWidth: "20rem", p: 4 }}>
               <Styled.h3 sx={{ mt: 0, mb: 3 }}>Cart Summary</Styled.h3>
-              <Divider />
-              {/* 
-          <Grid gap={1} columns={2} sx={{ my: 3 }}>
-            <Text>Subtotal:</Text>
-            <Text sx={{ marginLeft: "auto" }}>{total}</Text>
-            <Text>Shipping:</Text>
-            <Text sx={{ marginLeft: "auto" }}> - </Text>
-            <Text>Tax: </Text>
-            <Text sx={{ marginLeft: "auto" }}>{tax}</Text>
-          </Grid> */}
 
               <Divider />
               <Grid gap={1} columns={2}>
                 <Text variant="bold">Estimated Total:</Text>
-                {/* <Text variant="bold" sx={{ marginLeft: "auto" }}>
-              {total}
-            </Text> */}
+                <Text variant="bold" sx={{ marginLeft: "auto" }}>
+                  ${cart.totalPrice}
+                </Text>
               </Grid>
+
               <Link url={checkout}>
                 <Button sx={{ mt: 4, width: "100%" }} onClick={checkout}>
                   Checkout
@@ -212,10 +194,50 @@ const CartPage = () => {
   )
 }
 
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
 const MainCartWrapper = styled.div`
   padding-top: 8rem;
 
-  grid-column: 4 / span 6;
+  grid-column: 3 / span 8;
+
+  ${props =>
+    props.tablet &&
+    media[props.tablet](`
+  grid-column: 2 / span 8;
+  `)}
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+    margin: 10px 10px 10px 10px;
+  grid-column: 1 / span 6;
+  `)}
 `
 
 export default CartPage

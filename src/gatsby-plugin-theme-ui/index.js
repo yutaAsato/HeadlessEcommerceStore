@@ -2,6 +2,12 @@ import { base } from "@theme-ui/presets"
 
 export default {
   ...base,
+
+  fonts: {
+    heading: "Nunito Sans , Conthrax",
+    body: "Nunito Sans , Conthrax",
+  },
+
   styles: {
     ...base.styles,
     a: {
@@ -19,12 +25,45 @@ export default {
       borderColor: "gray",
       opacity: "0.3",
     },
+    p: {
+      color: `secondary`,
+    },
+    h5: {
+      fontSize: 1,
+      // textDecoration: `none`,
+    },
+    h4: {
+      fontSize: 1,
+    },
+    li: {
+      fontSize: [`0.6rem`, `1rem`, `1rem`, `1rem`, `1rem`],
+      listStyleType: `none`,
+      color: "primary",
+    },
+    h3: {
+      margin: 0,
+      fontSize: [`1rem`, `1rem`, `2rem`, `3rem`, `3rem`],
+    },
+  },
+
+  colors: {
+    text: "#888888",
+    background: " #c5c0ab",
+    primary: "#888888",
+    secondary: `white`,
   },
   fontWeights: {
     medium: 600,
     bold: 800,
   },
   text: {
+    // body: {
+    //   fontFamily: `body`,
+    //   color: `secondary`,
+    // },
+    heading: {
+      fontFamily: `heading`,
+    },
     bold: {
       fontWeight: 600,
     },
@@ -53,12 +92,16 @@ export default {
   },
   buttons: {
     primary: {
-      color: "blue",
-      bg: "black",
+      color: "black",
+      bg: " #c5c0ab",
+      border: "1px solid",
+      borderColor: "black",
       fontWeight: 600,
       "&:hover": {
-        bg: "gray",
+        bg: "primary",
         cursor: "pointer",
+        color: "white",
+        border: `none`,
       },
     },
     secondary: {
@@ -76,9 +119,5 @@ export default {
       },
     },
   },
-  colors: {
-    text: "#000",
-    background: "#fff",
-    primary: "tomato",
-  },
+  breakpoints: ["480px", "800px", "1050px", "1300px", "1600px"],
 }

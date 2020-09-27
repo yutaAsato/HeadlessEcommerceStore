@@ -10,10 +10,16 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { createGlobalStyle } from "styled-components"
 
+//components
 import { Header } from "./header/Header"
+import { Footer } from "./Footer"
 import "./layout.css"
 
 //======================================================================
+if (typeof window !== "undefined") {
+  // eslint-disable-next-line global-require
+  require("smooth-scroll")('a[href*="#"]')
+}
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -33,14 +39,13 @@ const Layout = ({ children }) => {
       <div
         style={{
           margin: `0 auto`,
-          maxWidth: `100vw`,
+          // maxWidth: `100vw`,
           // padding: `0 1.0875rem 1.45rem`,
         }}
       >
         <main>{children}</main>
-
-        <footer>This is the footer section</footer>
       </div>
+      <Footer />
       {/* </GlobalStyle> */}
     </>
   )

@@ -7,7 +7,9 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
-//====================================================================================
+import { Button, Alert, Close } from "@theme-ui/components"
+
+//==========================================================================
 
 //Slider
 const settings = {
@@ -17,17 +19,26 @@ const settings = {
   speed: 2000,
   slidesToShow: 1,
   slidesToScroll: 1,
-  arrow: true,
+  arrows: false,
   autoplay: true,
   autoplaySpeed: 6000,
 }
 
-const MainHeroImage = () => {
+//==========================================================================
+
+export const HeroImage = () => {
+  //=========================================
   const data = useStaticQuery(graphql`
     query {
       allPrismicHomepageBodyHerotopsection {
         nodes {
           items {
+            title {
+              html
+            }
+            rich_text {
+              html
+            }
             image {
               localFile {
                 childImageSharp {
@@ -42,120 +53,204 @@ const MainHeroImage = () => {
       }
     }
   `)
+  //=================================================
 
-  const slider = data.allPrismicHomepageBodyHerotopsection.nodes[0].items.map(
-    x => (
-      <div
-        key={x.image.localFile.childImageSharp.fluid.src}
-        style={{ width: `100%`, height: `100%` }}
-      >
-        <Img
-          style={{ width: `100%` }}
-          imgStyle={{ height: `100%` }}
-          fluid={x.image.localFile.childImageSharp.fluid}
-        />
-      </div>
+  //mainHeroImage
+  const MainHeroImage = () => {
+    //slider
+    const slider = data.allPrismicHomepageBodyHerotopsection.nodes[0].items.map(
+      x => (
+        <div
+          key={x.image.localFile.childImageSharp.fluid.src}
+          style={{ width: `100%`, height: `100%` }}
+        >
+          <Img
+            style={{ width: `100%` }}
+            imgStyle={{ height: `100%` }}
+            fluid={x.image.localFile.childImageSharp.fluid}
+          />
+        </div>
+      )
     )
-  )
 
-  return <Slider {...settings}>{slider}</Slider>
-}
+    return <Slider {...settings}>{slider}</Slider>
+  }
 
-//==========================================================================
-
-export const HeroImage = () => {
-  // console.log(window.innerHeight)
-
+  console.log(data)
+  //==================================================================
+  const heroMainText =
+    data.allPrismicHomepageBodyHerotopsection.nodes[0].items[0].rich_text.html
+  //======================================================================
   return (
     <>
-      <HeroImageWrapper>
-        <MainHeroImage />
-        {/* <ImageOverlay /> */}
-        {/* <TextWrapper>
-          <TextOverlayWrapper>
-            <TextOverlay />
-            <HeroMainText>
-              <span
-                style={{
-                  fontSize: `2.5rem`,
-                  fontWeight: `700`,
-                  color: `red`,
-                  fontStyle: `italic`,
-                }}
-              >
-                NEW{" "}
-              </span>
-              <span style={{ fontSize: `2.1rem`, fontWeight: `300` }}>
-                COLLECTION
-              </span>
-            </HeroMainText>
-          </TextOverlayWrapper>
-        </TextWrapper> */}
-        {/* <HeroButtonWrapper>
-          <HeroButton>SHOP NOW</HeroButton>
-        </HeroButtonWrapper> */}
-      </HeroImageWrapper>
+      <Grid>
+        <HeroImageWrapper>
+          <MainHeroImage />
+          <MainWrapper>
+            <TextWrapper
+              size={2}
+              desktop="desktop"
+              smallDesktop="smallDesktop"
+              laptop="laptop"
+              phone="phone"
+            >
+              <HeroMainText>
+                <div dangerouslySetInnerHTML={{ __html: heroMainText }} />
+              </HeroMainText>
+            </TextWrapper>
+            <HeroButtonWrapper
+              desktop="desktop"
+              smallDesktop="smallDesktop"
+              laptop="laptop"
+              phone="phone"
+            >
+              <Link to="#smooth-scroll-category">
+                <Button sx={{ color: `white`, bg: `primary`, border: `none` }}>
+                  DISCOVER
+                </Button>
+              </Link>
+
+              {/* <HeroButton>SHOP NOW</HeroButton> */}
+            </HeroButtonWrapper>
+          </MainWrapper>
+        </HeroImageWrapper>
+      </Grid>
     </>
   )
 }
 
 //==================================================
 
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
+const Grid = styled.div`
+  /* border: 1px solid red; */
+`
+
 const HeroImageWrapper = styled.div`
   width: 100%;
   position: relative;
-  /* margin-top: -20px; */
 `
-const ImageOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 70%;
-  background-color: black;
-  opacity: 0.2;
+
+const MainWrapper = styled.div`
+  width: "100%";
+  display: flex;
 `
 
 const TextWrapper = styled.div`
-  width: 100%;
+  width: 20rem;
   color: white;
   position: absolute;
-  top: 50%;
-  left: 5%;
+  top: 60%;
+  left: 75%;
   bottom: 140;
   right: 0;
   z-index: 99;
-  white-space: nowrap;
-  display: inline;
+  
+  /* white-space: nowrap; */
+  /* display: inline; */
+
+  flex: ${props => props.size};
+
+  ${props =>
+    props.desktop &&
+    media[props.desktop](`
+    font-size: 0.9rem;
+    width: 15rem;
+  `)}
+
+  ${props =>
+    props.smallDesktop &&
+    media[props.smallDesktop](`
+    margin-top: -1rem;
+    font-size: 0.9rem;
+    width: 15rem;
+  `)}
+
+  ${props =>
+    props.laptop &&
+    media[props.laptop](`
+    margin-top: -1rem;
+    font-size: 0.5rem;
+    width: 8rem;
+  `)}
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+    margin-top: -1rem;
+    font-size: 0.3rem;
+    width: 5rem;
+  `)}
+
 `
 
-const TextOverlayWrapper = styled.div`
-  position: relative;
-  /* width: 100%;
-  height: 100%; */
-`
-const TextOverlay = styled.div`
-  position: absolute;
-  background-color: grey;
-  width: 360px;
-  height: 50px;
-  opacity: 0.5;
-`
 const HeroMainText = styled.div`
+  width: 100%;
   position: absolute;
   top: 12px;
 `
 
 const HeroButtonWrapper = styled.div`
   position: absolute;
-  top: 54%;
-  left: 10%;
-  bottom: 140;
+  top: 88%;
+  left: 75%;
+  /* bottom: 140; */
   right: 0;
   z-index: 99;
   white-space: nowrap;
   display: inline;
+
+  ${props =>
+    props.desktop &&
+    media[props.desktop](`
+    font-size: 0.9rem;
+  `)}
+
+  ${props =>
+    props.smallDesktop &&
+    media[props.smallDesktop](`
+ top: 86%;
+  `)}
+
+  ${props =>
+    props.laptop &&
+    media[props.laptop](`
+    font-size: 0.5rem;
+    top: 84%;
+  `)}
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+    font-size: 0.3rem;
+    top: 80%;
+  `)}
+
 `
 const HeroButton = styled.button`
   background: ${props => (props.primary ? "#070707" : "#070707")};
@@ -169,3 +264,5 @@ const HeroButton = styled.button`
   /* border: 2px solid black; */
   border-radius: 3px;
 `
+
+//======================================================================

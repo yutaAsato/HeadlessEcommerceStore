@@ -1,0 +1,53 @@
+{
+  "Main": {
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "labels": {
+          "about_slice": [
+            {
+              "name": "about_slice",
+              "display": "about slice"
+            }
+          ]
+        },
+        "choices": {
+          "about_slice": {
+            "type": "Slice",
+            "fieldset": "about slice",
+            "description": "about slice",
+            "icon": "accessibility",
+            "display": "list",
+            "non-repeat": {
+              "title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading1, heading2, heading3, heading4, heading5, heading6",
+                  "label": "title"
+                }
+              }
+            },
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "image"
+                }
+              },
+              "text": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph",
+                  "label": "text"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

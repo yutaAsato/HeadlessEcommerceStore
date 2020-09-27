@@ -1,3 +1,7 @@
+/** @jsx jsx */
+
+import { Styled, jsx } from "theme-ui"
+
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
@@ -86,6 +90,7 @@ const HeaderSlider = () => {
     </div>
   )
 }
+//=========================================================
 
 const navBarHead = [
   { title: "HOME", url: "/" },
@@ -95,39 +100,51 @@ const navBarHead = [
   { title: "ABOUT", url: "/about" },
 ]
 
+//==========================================================
+
 export const Header = ({ siteTitle }) => {
   return (
-    <HeaderContainer>
-      {/* <HeaderSlick>
+    <Grid>
+      <HeaderContainer>
+        {/* <HeaderSlick>
         <HeaderSlickWrapper>
           <HeaderSlider />
         </HeaderSlickWrapper>
       </HeaderSlick> */}
-      <NavbarWrapper>
-        <NavbarItems>
-          <UnorderedList>
-            {navBarHead.map(nav => (
-              <Link to={nav.url} style={{ textDecoration: `none` }}>
-                <div className="listWrapper" key={nav.title}>
-                  <li
-                    style={{
-                      flex: `3`,
-                      listStyleType: `none`,
-                      fontWeight: `bold`,
-                      fontSize: `0.8rem`,
-                      color: `#c2c2c2`,
-                    }}
-                  >
-                    {nav.title}
-                  </li>
-                </div>
-              </Link>
-            ))}
-            <CartLogo />
-          </UnorderedList>
-        </NavbarItems>
-      </NavbarWrapper>
-    </HeaderContainer>
+        <LogoWrapperContainer size={1} collapse="tablet" laptop={"laptop"}>
+          <LogoWrapper laptop="laptop">
+            <Link to={`/`} style={{ textDecoration: `none` }}>
+              <Styled.h3
+                sx={{
+                  fontSize: `2.4rem`,
+                  fontStyle: `italic`,
+                  color: `primary`,
+                }}
+              >
+                CONCEPT.
+              </Styled.h3>
+            </Link>
+          </LogoWrapper>
+        </LogoWrapperContainer>
+
+        <NavbarWrapper size={10}>
+          <NavbarItems phone="phone" tablet="tablet">
+            <UnorderedList>
+              {navBarHead.map(nav => (
+                <Link to={nav.url} style={{ textDecoration: `none` }}>
+                  <div className="listWrapper" key={nav.title}>
+                    <Styled.li>{nav.title}</Styled.li>
+                  </div>
+                </Link>
+              ))}
+              <CartLogoWrapper collapse="phone">
+                <CartLogo />
+              </CartLogoWrapper>
+            </UnorderedList>
+          </NavbarItems>
+        </NavbarWrapper>
+      </HeaderContainer>
+    </Grid>
   )
 }
 
@@ -139,40 +156,126 @@ Header.defaultProps = {
   siteTitle: ``,
 }
 
+//====================================================
+
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
+const Grid = styled.div`
+  /* border: 2px solid red; */
+`
+
 const HeaderContainer = styled.div`
-  position: absolute;
+  display: flex;
   width: 100%;
   z-index: 99;
 `
 
-const HeaderSlick = styled.header`
-  /* background: black; */
-  margin-bottom: 1rem;
-  height: 120px;
-  background: rgba(0, 0, 0, 0.2);
+const LogoWrapperContainer = styled.div`
+  margin: 3rem 0rem 0rem 0rem;
+  /* max-height: 4rem; */
+
+  flex: ${props => props.size};
+
+  ${props =>
+    props.collapse &&
+    media[props.collapse](`
+display: none
+`)}
 `
 
-const HeaderSlickWrapper = styled.div`
-  margin: 0 auto;
-  max-width: 910px;
-  padding: 2rem 1.0875rem;
+const LogoWrapper = styled.div`
+  margin-left: 6rem;
+  min-height: 4rem;
+  line-height: 4rem;
+
+  ${props =>
+    props.laptop &&
+    media[props.laptop](`
+    margin-left: 3rem
+`)}
 `
+
+// const HeaderSlick = styled.header`
+//   /* background: black; */
+//   margin-bottom: 1rem;
+//   height: 120px;
+//   background: rgba(0, 0, 0, 0.2);
+// `
+
+// const HeaderSlickWrapper = styled.div`
+//   margin: 0 auto;
+//   max-width: 910px;
+//   padding: 2rem 1.0875rem;
+// `
 const NavbarWrapper = styled.div`
-  position: absolute;
+  /* position: absolute; */
+  margin: 3rem 0rem 0rem 0rem;
   width: 100%;
-  z-index: 99;
-  top: 30px;
-  left: 10px;
+
+  max-height: 4rem;
+
+  flex: ${props => props.size};
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+`)}
 `
+
 const NavbarItems = styled.nav`
-  padding-left: 155px;
-  width: 80%;
+  /* max-width: 70rem; */
+  max-width: 70%;
+  min-height: 3rem;
+
+  ${props =>
+    props.tablet &&
+    media[props.tablet](`
+    max-width: 93%;
+`)}
+
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+    max-width: 90%;
+`)}
 `
+
 const UnorderedList = styled.ul`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding-left: 270px;
+  /* padding-left: 270px; */
   margin-bottom: 0.9rem;
-  filter: brightness(1.2);
+`
+const CartLogoWrapper = styled.div`
+  ${props =>
+    props.collapse &&
+    media[props.collapse](`
+display: none
+`)}
 `

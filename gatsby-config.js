@@ -5,6 +5,8 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    `gatsby-plugin-smoothscroll`,
+    `gatsby-plugin-theme-ui`,
     `gatsby-plugin-remove-trailing-slashes`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
@@ -36,6 +38,7 @@ module.exports = {
         schemas: {
           homepage: require("./src/custom_types/homePage.json"),
           single_product: require("./src/custom_types/singleProduct.json"),
+          about: require("./src/custom_types/about.json"),
         },
         shouldDownloadImage: ({ node, key, value }) => {
           // Return true to download the image or false to skip.
