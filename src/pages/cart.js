@@ -57,8 +57,6 @@ const CartPage = () => {
   const checkout = useCheckoutUrl()
   const addItemToCart = useAddItemToCart()
 
-  console.log(cart.totalPrice)
-
   //===========================================================
 
   const betterProductHandles = products.map(({ handle, variants }) => {
