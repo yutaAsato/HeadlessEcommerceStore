@@ -9,6 +9,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { createGlobalStyle } from "styled-components"
+import styled from "styled-components"
 
 //components
 import { Header } from "./header/Header"
@@ -35,12 +36,12 @@ const Layout = ({ children }) => {
   return (
     <>
       <GlobalStyle />
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <HeaderWrapper phone="phone">
+        <Header siteTitle={data.site.siteMetadata.title} />
+      </HeaderWrapper>
       <div
         style={{
           margin: `0 auto`,
-          // maxWidth: `100vw`,
-          // padding: `0 1.0875rem 1.45rem`,
         }}
       >
         <main>{children}</main>
@@ -69,6 +70,44 @@ const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Nunito Sans', serif;
   }
+`
+
+//----------------styles-------------------------
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
+const HeaderWrapper = styled.div`
+  /* display: none */
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+display: none
+`)};
 `
 
 export default Layout

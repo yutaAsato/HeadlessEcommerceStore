@@ -48,7 +48,7 @@ export default {
 
   colors: {
     text: "#888888",
-    background: " #c5c0ab",
+    background: " #cfa600",
     primary: "#888888",
     secondary: `white`,
   },

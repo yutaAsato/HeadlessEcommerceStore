@@ -18,8 +18,8 @@ export const FeaturedProducts = (data, productType) => {
   // console.log("featurerdProducts:", products)
 
   return (
-    <FeaturedContainer>
-      <TextWrapper>
+    <FeaturedContainer phone="phone">
+      <TextWrapper phone="phone">
         <Styled.h2 sx={{ color: `primary` }}>FEATURED PRODUCTS</Styled.h2>
       </TextWrapper>
       <ProductListWrapper>
@@ -31,6 +31,36 @@ export const FeaturedProducts = (data, productType) => {
   )
 }
 
+//=================styles---------------------
+
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
 const FeaturedContainer = styled.div`
   position: relative;
   display: flex;
@@ -39,10 +69,22 @@ const FeaturedContainer = styled.div`
   height: 100%;
   justify-content: center;
   margin-top: 8.2rem;
+
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+    margin-top:2rem
+`)}
 `
 const TextWrapper = styled.div`
   font-weight: bold;
   margin-top: -60px;
+
+  ${props =>
+    props.phone &&
+    media[props.phone](`
+font-size: 0.2rem
+`)}
 `
 const ProductListWrapper = styled.div`
   display: flex;

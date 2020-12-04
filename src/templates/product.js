@@ -40,10 +40,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
   console.log("productPage:", product)
   console.log("productPageContext:", pageContext)
 
-  // const colors = product.options.find(
-  //   option => option.name.toLowerCase() === "color"
-  // ).values
-
   let sizes
 
   if (pageContext.productType === "apparel") {
@@ -54,13 +50,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
   const variants = useMemo(() => prepareVariantsWithOptions(product.variants), [
     product.variants,
   ])
-
-  // const images = useMemo(() => prepareVariantsImages(variants, "color"), [
-  //   variants,
-  // ])
-  // if (images.length < 1) {
-  //   throw new Error("Must have at least one product image!")
-  // }
 
   const addItemToCart = useAddItemToCart()
   const [variant, setVariant] = useState(variants[0])
@@ -77,15 +66,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
     }
   }, [size, color, variants, variant.shopifyId])
 
-  // const gallery =
-  //   images.length > 1 ? (
-  //     <Grid gap={2} columns={6}>
-  //       {images.map(({ src, color }) => (
-  //         <Thumbnail key={color} src={src} onClick={() => setColor(color)} />
-  //       ))}
-  //     </Grid>
-  //   ) : null
-
   console.log("variant:", variant)
 
   //addToCart
@@ -96,24 +76,7 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
 
   return (
     <Layout>
-      {/* <SEO title={product.title} />
-      {addedToCartMessage ? (
-        <Alert sx={{ mb: 4 }} variant="primary">
-          {addedToCartMessage}
-          <Close
-            ml="auto"
-            mr={-2}
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-              },
-            }}
-            onClick={() => setAddedToCartMessage(null)}
-          />
-        </Alert>
-      ) : null} */}
-
-      <ProductPageContainer>
+      <ProductPageContainer phone="phone">
         <Grid gap={2} columns={12}>
           <ProductImageWrapper>
             <ProductImageOverlay />
@@ -125,8 +88,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
               />
             </ProductImage>
           </ProductImageWrapper>
-
-          {/* {gallery} */}
 
           <ProductDetailsContainer>
             <Styled.h1 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h1>
@@ -205,8 +166,43 @@ export const ProductPageQuery = graphql`
 
 //styles
 
+const media = {
+  phone: styles => `
+  @media only screen and (max-width: 480px){
+    ${styles}
+  }
+  `,
+  tablet: styles => `
+  @media only screen and (max-width: 800px){
+    ${styles}
+  }
+  `,
+  laptop: styles => `
+  @media only screen and (max-width: 1050px){
+    ${styles}
+  }
+  `,
+  smallDesktop: styles => `
+  @media only screen and (max-width: 1300px){
+    ${styles}
+  }
+  `,
+  desktop: styles => `
+  @media only screen and (max-width: 1600px){
+    ${styles}
+  }
+  `,
+}
+
 const ProductPageContainer = styled.div`
   padding-top: 8rem;
+
+  ${props =>
+    props.tablet &&
+    media[props.tablet](`
+  color: pink
+
+`)}
 `
 
 const ProductImageWrapper = styled.div`
