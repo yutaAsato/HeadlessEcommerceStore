@@ -62,11 +62,16 @@ export const HeroImage = () => {
       x => (
         <div
           css={{
+            paddingTop: "100px",
             minWidth: "400px",
           }}
           key={x.image.localFile.childImageSharp.fluid.src}
         >
-          <Img fluid={x.image.localFile.childImageSharp.fluid} />
+          <Img
+            fluid={x.image.localFile.childImageSharp.fluid}
+            // imgStyle={{ maxWidth: "300px" }}
+            // css={{ height: "300px" }}
+          />
         </div>
       )
     )

@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import React from "react"
 import { Styled, jsx } from "theme-ui"
+
+import * as mq from "../components/layout/media-queries"
 import Img from "gatsby-image"
 import { Grid, Divider, Button, Card, Text } from "@theme-ui/components"
 import { Link } from "../components/link"
@@ -91,24 +93,44 @@ const CartPage = () => {
   //line items
   const LineItem = ({ item }) => (
     <div
-      sx={{
+      css={{
         display: "grid",
         gridGap: "15px",
-        gridTemplateColumns: "120px 2fr 80px 80px",
+        gridTemplateColumns: "120px 2fr 200px ",
         alignItems: "center",
+        [mq.small]: {
+          gridTemplateColumns: "1fr",
+        },
       }}
     >
-      <div>
-        <div sx={{ padding: 1, border: "1px solid gray" }}>
+      <div css={{ [mq.small]: { display: "flex", justifyContent: "center" } }}>
+        <div
+          css={{
+            padding: 1,
+            border: "1px solid gray",
+            [mq.small]: {
+              width: "300px",
+            },
+          }}
+        >
           <Img fluid={getImageFluidForVariant(item.variant.id)} />
         </div>
       </div>
-      <div>
+      <div
+        css={{
+          [mq.small]: {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      >
         <Link
           url={`/product/${getHandleForVariant(item.variant.id)}`}
           sx={{ fontSize: 3, m: 0, fontWeight: 700 }}
         >
-          {item.title}
+          <Styled.h4>{item.title}</Styled.h4>
         </Link>
         <Styled.ul sx={{ mt: 2, mb: 0, padding: 0, listStyle: "none" }}>
           {item.variant.selectedOptions.map(({ name, value }) => (
@@ -123,18 +145,32 @@ const CartPage = () => {
           </li>
         </Styled.ul>
       </div>
-      <Button variant="link" onClick={() => removeFromCart(item.variant.id)}>
-        Delete
-      </Button>
-      <Text
-        sx={{
-          fontSize: 4,
-          fontWeight: 700,
-          marginLeft: "auto",
+      <div
+        css={{
+          display: "flex",
+          [mq.small]: { flexDirection: "column", alignItems: "center" },
         }}
       >
-        ${Number(item.variant.priceV2.amount).toFixed(2)}
-      </Text>
+        <Button
+          variant="secondary"
+          onClick={() => removeFromCart(item.variant.id)}
+          css={{
+            [mq.small]: { width: "200px" },
+          }}
+        >
+          Delete
+        </Button>
+        <Text
+          sx={{
+            fontSize: 4,
+            fontWeight: 700,
+            marginLeft: "auto",
+            [mq.small]: { marginLeft: 0, paddingTop: "10px" },
+          }}
+        >
+          ${Number(item.variant.priceV2.amount).toFixed(2)}
+        </Text>
+      </div>
     </div>
   )
 
@@ -156,15 +192,25 @@ const CartPage = () => {
     </Layout>
   ) : (
     <Layout>
-      <Grid gap={2} columns={12}>
-        <MainCartWrapper tablet="tablet" phone="phone">
-          {/* <SEO title="Cart" /> */}
-          <Styled.h1>Cart</Styled.h1>
+      {/* <Grid gap={2} columns={12}> */}
+      <div
+        css={{ display: "flex", justifyContent: "center", paddingTop: "50px" }}
+      >
+        <div
+          css={{
+            // gridTemplateColumns: "1fr 1fr 1fr ",
+            width: "900px",
+          }}
+        >
+          <div css={{ display: "flex", justifyContent: "center" }}>
+            <Styled.h1>Cart</Styled.h1>
+          </div>
+
           {lineItems.map(item => (
-            <React.Fragment key={item.id}>
+            <div key={item.id}>
               <LineItem key={item.id} item={item} />
               <Divider sx={{ my: 3 }} />
-            </React.Fragment>
+            </div>
           ))}
 
           <div sx={{ display: "flex" }}>
@@ -186,8 +232,10 @@ const CartPage = () => {
               </Link>
             </Card>
           </div>
-        </MainCartWrapper>
-      </Grid>
+        </div>
+      </div>
+
+      {/* </Grid> */}
     </Layout>
   )
 }

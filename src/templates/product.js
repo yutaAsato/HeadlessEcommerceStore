@@ -90,6 +90,8 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
           [mq.small]: {
             gridTemplateColumns: "1fr",
             gridTemplateRows: "auto",
+            gridGap: "3em",
+
             width: "100%",
           },
         }}
@@ -105,7 +107,7 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
         </div>
 
         <div>
-          <Styled.h1 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h1>
+          <Styled.h4 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h4>
           <Styled.p
             sx={{ pt: `40px` }}
             dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}

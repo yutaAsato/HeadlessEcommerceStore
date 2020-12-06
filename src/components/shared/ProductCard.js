@@ -52,7 +52,7 @@ export const ProductCard = products => {
         }}
       >
         {products.products.map(product => (
-          <div css={{ padding: "20px", width: "250px", height: "400px" }}>
+          <div css={{ padding: "20px", width: "350px", height: "400px" }}>
             <Link url={`/product/${product.handle}`}>
               {/* <ImageOverlay /> */}
               <div

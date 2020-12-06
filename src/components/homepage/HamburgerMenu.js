@@ -39,6 +39,7 @@ function HamburgerMenu() {
       background: "#ffffff",
       padding: "2.5em 1.5em 0",
       fontSize: "1.15em",
+      paddingLeft: "80px",
     },
     bmMorphShape: {
       fill: "#373a47",
@@ -58,8 +59,6 @@ function HamburgerMenu() {
     },
   }
 
-  //   <Menu styles={ styles } />
-
   return (
     <Menu styles={styles} right>
       {navBarHead.map(nav => (
@@ -77,7 +76,7 @@ function HamburgerMenu() {
               listStyleType: "none",
             }}
           >
-            <Styled.li>{nav.title}</Styled.li>
+            <Styled.li css={{ fontWeight: "900px" }}>{nav.title}</Styled.li>
           </ul>
         </Link>
       ))}
@@ -91,6 +90,7 @@ const navBarHead = [
   { title: "STUDIO", url: "/studio" },
   { title: "GALLERY", url: "/gallery" },
   { title: "ABOUT", url: "/about" },
+  { title: "CART", url: "/cart" },
 ]
 
 export { HamburgerMenu }

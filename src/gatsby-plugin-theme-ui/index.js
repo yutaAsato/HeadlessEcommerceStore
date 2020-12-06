@@ -45,7 +45,8 @@ export default {
       color: "primary",
     },
     li: {
-      fontSize: [`0.6rem`, `1rem`, `1rem`, `1rem`, `1rem`],
+      fontSize: [`1.4rem`, `1rem`, `1rem`, `1rem`, `1rem`],
+      fontWeight: [`800`, `1rem`, `1rem`, `1rem`, `1rem`],
       listStyleType: `none`,
       color: "primary",
     },
