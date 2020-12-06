@@ -30,10 +30,19 @@ export default {
     },
     h5: {
       fontSize: 1,
-      // textDecoration: `none`,
+      margin: 0,
     },
     h4: {
+      color: "primary",
       fontSize: 1,
+      margin: 0,
+    },
+    h1: {
+      color: "primary",
+    },
+    h2: {
+      fontSize: [`0.8rem`, `1.5rem`, `1.5rem`, `2rem`, `2rem`],
+      color: "primary",
     },
     li: {
       fontSize: [`0.6rem`, `1rem`, `1rem`, `1rem`, `1rem`],
@@ -47,9 +56,9 @@ export default {
   },
 
   colors: {
-    text: "#888888",
-    background: " #cfa600",
-    primary: "#888888",
+    text: "#3f3f3f",
+    background: "black",
+    primary: " #c5c0ab",
     secondary: `white`,
   },
   fontWeights: {
@@ -119,5 +128,5 @@ export default {
       },
     },
   },
-  breakpoints: ["480px", "800px", "1050px", "1300px", "1600px"],
+  breakpoints: ["480px", "991px", "1050px", "1300px", "1600px"],
 }

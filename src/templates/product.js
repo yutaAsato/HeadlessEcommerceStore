@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useMemo } from "react"
 import styled from "styled-components"
 
+import * as mq from "../components/layout/media-queries"
+
 import { Styled, jsx } from "theme-ui"
 import Img from "gatsby-image"
 import { Grid, Button, Alert, Close } from "@theme-ui/components"
@@ -76,49 +78,61 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
 
   return (
     <Layout>
-      <ProductPageContainer phone="phone">
-        <Grid gap={2} columns={12}>
-          <ProductImageWrapper>
-            <ProductImageOverlay />
-            <ProductImage>
-              <Img
-                fluid={
-                  product.variants[0].image.localFile.childImageSharp.fluid
-                }
-              />
-            </ProductImage>
-          </ProductImageWrapper>
+      <div
+        css={{
+          margin: "20px auto",
+          padding: "4em 2em",
+          maxWidth: "940px",
+          width: "100%",
+          display: "grid",
+          gridGap: "9em",
+          gridTemplateColumns: "1fr 3fr",
+          [mq.small]: {
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "auto",
+            width: "100%",
+          },
+        }}
+      >
+        <div
+          css={{
+            minWidth: "300px",
+          }}
+        >
+          <Img
+            fluid={product.variants[0].image.localFile.childImageSharp.fluid}
+          />
+        </div>
 
-          <ProductDetailsContainer>
-            <Styled.h1 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h1>
-            <Styled.p
-              sx={{ pt: `40px` }}
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-            />
-            <div>
-              <Grid padding={2} columns={2}>
-                {pageContext.productType === "apparel" ? (
-                  <OptionPicker
-                    key="Size"
-                    name="Size"
-                    options={sizes}
-                    selected={size}
-                    onChange={event => setSize(event.target.value)}
-                  />
-                ) : null}
-              </Grid>
-            </div>
-            <div style={{ paddingTop: `20px` }}>
-              <Button
-                sx={{ margin: 2, display: "block" }}
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </Button>
-            </div>
-          </ProductDetailsContainer>
-        </Grid>
-      </ProductPageContainer>
+        <div>
+          <Styled.h1 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h1>
+          <Styled.p
+            sx={{ pt: `40px` }}
+            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+          />
+          <div>
+            <Grid padding={2} columns={2}>
+              {pageContext.productType === "apparel" ? (
+                <OptionPicker
+                  key="Size"
+                  name="Size"
+                  options={sizes}
+                  selected={size}
+                  onChange={event => setSize(event.target.value)}
+                />
+              ) : null}
+            </Grid>
+          </div>
+          <div style={{ paddingTop: `20px` }}>
+            <Button
+              sx={{ margin: 2, display: "block" }}
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </Button>
+          </div>
+        </div>
+      </div>
     </Layout>
   )
 }
@@ -160,99 +174,4 @@ export const ProductPageQuery = graphql`
       }
     }
   }
-`
-
-//================================
-
-//styles
-
-const media = {
-  phone: styles => `
-  @media only screen and (max-width: 480px){
-    ${styles}
-  }
-  `,
-  tablet: styles => `
-  @media only screen and (max-width: 800px){
-    ${styles}
-  }
-  `,
-  laptop: styles => `
-  @media only screen and (max-width: 1050px){
-    ${styles}
-  }
-  `,
-  smallDesktop: styles => `
-  @media only screen and (max-width: 1300px){
-    ${styles}
-  }
-  `,
-  desktop: styles => `
-  @media only screen and (max-width: 1600px){
-    ${styles}
-  }
-  `,
-}
-
-const ProductPageContainer = styled.div`
-  padding-top: 8rem;
-
-  ${props =>
-    props.tablet &&
-    media[props.tablet](`
-  color: pink
-
-`)}
-`
-
-const ProductImageWrapper = styled.div`
-  grid-column: 3;
-
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* border-style: solid; */
-  position: relative;
-
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-    0 100px 80px rgba(0, 0, 0, 0.12);
-
-  min-height: 200px;
-  /* margin: 100px auto; */
-  background: white;
-  border-radius: 5px;
-`
-
-const ProductImageOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  pointer-events: none;
-
-  background-color: rgba(18, 34, 46, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  > div {
-    display: flex;
-    background-color: white;
-    border-radius: 50%;
-    padding: 6px;
-  }
-`
-
-const ProductImage = styled.div`
-  width: 600px;
-`
-
-const ProductDetailsContainer = styled.div`
-  /* padding-top: 8rem; */
-  grid-column: 6 / span 5;
 `

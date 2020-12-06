@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { Styled, jsx } from "theme-ui"
+import * as mq from "../layout/media-queries"
 
 import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
@@ -15,19 +16,24 @@ import { ProductCard } from "../shared/ProductCard"
 export const FeaturedProducts = (data, productType) => {
   const products = data.data.allShopifyCollection.nodes[0].products
 
-  // console.log("featurerdProducts:", products)
-
   return (
-    <FeaturedContainer phone="phone">
-      <TextWrapper phone="phone">
+    <div>
+      <div
+        css={{
+          display: "flex",
+          justifyContent: "center",
+          [mq.small]: {
+            // display: "none",
+          },
+        }}
+      >
         <Styled.h2 sx={{ color: `primary` }}>FEATURED PRODUCTS</Styled.h2>
-      </TextWrapper>
-      <ProductListWrapper>
-        <ProductListItems>
-          <ProductCard products={products} productType={"featured"} />
-        </ProductListItems>
-      </ProductListWrapper>
-    </FeaturedContainer>
+      </div>
+
+      <div css={{ display: "flex", justifyContent: "center" }}>
+        <ProductCard products={products} productType={"featured"} />
+      </div>
+    </div>
   )
 }
 
@@ -61,35 +67,35 @@ const media = {
   `,
 }
 
-const FeaturedContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  margin-top: 8.2rem;
+// const FeaturedContainer = styled.div`
+//   position: relative;
+//   display: flex;
+//   flex-wrap: wrap;
+//   width: 100%;
+//   height: 100%;
+//   justify-content: center;
+//   margin-top: 8.2rem;
 
-  ${props =>
-    props.phone &&
-    media[props.phone](`
-    margin-top:2rem
-`)}
-`
-const TextWrapper = styled.div`
-  font-weight: bold;
-  margin-top: -60px;
+//   ${props =>
+//     props.phone &&
+//     media[props.phone](`
+//     margin-top:2rem
+// `)}
+// `
+// const TextWrapper = styled.div`
+//   font-weight: bold;
+//   margin-top: -60px;
 
-  ${props =>
-    props.phone &&
-    media[props.phone](`
-font-size: 0.2rem
-`)}
-`
-const ProductListWrapper = styled.div`
-  display: flex;
-  position: relative;
-  width: 100%;
-  justify-content: center;
-`
-const ProductListItems = styled.div``
+//   ${props =>
+//     props.phone &&
+//     media[props.phone](`
+// font-size: 0.2rem
+// `)}
+// `
+// const ProductListWrapper = styled.div`
+//   display: flex;
+//   position: relative;
+//   width: 100%;
+//   justify-content: center;
+// `
+// const ProductListItems = styled.div``

@@ -15,6 +15,7 @@ import styled from "styled-components"
 import { Header } from "./header/Header"
 import { Footer } from "./Footer"
 import "./layout.css"
+import { HamburgerMenu } from "../homepage/HamburgerMenu"
 
 //======================================================================
 if (typeof window !== "undefined") {
@@ -35,10 +36,15 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
+      <div>
+        <HamburgerMenu />
+      </div>
+
       <HeaderWrapper phone="phone">
         <Header siteTitle={data.site.siteMetadata.title} />
       </HeaderWrapper>
+
       <div
         style={{
           margin: `0 auto`,
@@ -57,20 +63,21 @@ Layout.propTypes = {
 }
 
 //sets fonts
-const GlobalStyle = createGlobalStyle`
-  @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,800;0,900;1,200;1,300;1,400;1,700;1,800;1,900&display=swap");
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 18px;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito Sans', serif;
-  }
-`
+// const GlobalStyle = createGlobalStyle`
+//   @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,800;0,900;1,200;1,300;1,400;1,700;1,800;1,900&display=swap");
+//   * {
+//     box-sizing: border-box;
+//   }
+//   body {
+//     width: 100%,
+//     margin: 0;
+//     font-family: 'Nunito Sans', sans-serif;
+//     font-size: 18px;
+//   }
+//   h1, h2, h3, h4, h5, h6 {
+//     font-family: 'Nunito Sans', serif;
+//   }
+// `
 
 //----------------styles-------------------------
 const media = {

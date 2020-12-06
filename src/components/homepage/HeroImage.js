@@ -42,7 +42,7 @@ export const HeroImage = () => {
             image {
               localFile {
                 childImageSharp {
-                  fluid(maxWidth: 3080, quality: 100) {
+                  fluid(maxWidth: 2000, quality: 100) {
                     ...GatsbyImageSharpFluid
                   }
                 }
@@ -61,14 +61,12 @@ export const HeroImage = () => {
     const slider = data.allPrismicHomepageBodyHerotopsection.nodes[0].items.map(
       x => (
         <div
+          css={{
+            minWidth: "400px",
+          }}
           key={x.image.localFile.childImageSharp.fluid.src}
-          style={{ width: `100%`, height: `100%` }}
         >
-          <Img
-            style={{ width: `100%` }}
-            imgStyle={{ height: `100%` }}
-            fluid={x.image.localFile.childImageSharp.fluid}
-          />
+          <Img fluid={x.image.localFile.childImageSharp.fluid} />
         </div>
       )
     )
@@ -76,45 +74,33 @@ export const HeroImage = () => {
     return <Slider {...settings}>{slider}</Slider>
   }
 
-  console.log(data)
   //==================================================================
   const heroMainText =
     data.allPrismicHomepageBodyHerotopsection.nodes[0].items[0].rich_text.html
   //======================================================================
   return (
     <>
-      <Grid>
-        <HeroImageWrapper>
-          <MainHeroImage />
-          <MainWrapper>
-            <TextWrapper
-              size={2}
-              desktop="desktop"
-              smallDesktop="smallDesktop"
-              laptop="laptop"
-              phone="phone"
-            >
-              <HeroMainText>
-                <div dangerouslySetInnerHTML={{ __html: heroMainText }} />
-              </HeroMainText>
-            </TextWrapper>
-            <HeroButtonWrapper
-              desktop="desktop"
-              smallDesktop="smallDesktop"
-              laptop="laptop"
-              phone="phone"
-            >
-              <Link to="#smooth-scroll-category">
-                <Button sx={{ color: `white`, bg: `primary`, border: `none` }}>
-                  DISCOVER
-                </Button>
-              </Link>
-
-              {/* <HeroButton>SHOP NOW</HeroButton> */}
-            </HeroButtonWrapper>
-          </MainWrapper>
-        </HeroImageWrapper>
-      </Grid>
+      <div
+        css={{
+          margin: "0 auto",
+          // padding: "4em 2em",
+          // maxWidth: "940px",
+          width: "100%",
+          // display: "grid",
+          // gridGap: "9em",
+          // gridTemplateColumns: "1fr 3fr",
+        }}
+      >
+        <MainHeroImage />
+        {/* <div>
+          <div dangerouslySetInnerHTML={{ __html: heroMainText }} />
+          <Link to="#smooth-scroll-category">
+            <Button sx={{ color: `white`, bg: `primary`, border: `none` }}>
+              DISCOVER
+            </Button>
+          </Link>
+        </div> */}
+      </div>
     </>
   )
 }
