@@ -88,7 +88,6 @@ const navBarHead = [
   { title: "HOME", url: "/" },
   { title: "APPAREL", url: "/apparel" },
   { title: "STUDIO", url: "/studio" },
-  { title: "GALLERY", url: "/gallery" },
   { title: "ABOUT", url: "/about" },
   { title: "CART", url: "/cart" },
 ]
