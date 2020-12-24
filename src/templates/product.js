@@ -82,7 +82,7 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
         css={{
           margin: "20px auto",
           padding: "4em 2em",
-          maxWidth: "940px",
+          maxWidth: "1140px",
           width: "100%",
           display: "grid",
           gridGap: "9em",
@@ -91,14 +91,16 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
             gridTemplateColumns: "1fr",
             gridTemplateRows: "auto",
             gridGap: "3em",
-
             width: "100%",
           },
         }}
       >
         <div
           css={{
-            minWidth: "300px",
+            minWidth: "600px",
+            [mq.small]: {
+              minWidth: "200px",
+            },
           }}
         >
           <Img

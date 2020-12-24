@@ -13,15 +13,16 @@ import { Button, Alert, Close } from "@theme-ui/components"
 
 //Slider
 const settings = {
-  dots: false,
+  dots: true,
   fade: true,
   infinite: true,
-  speed: 2000,
-  slidesToShow: 1,
+  speed: 3000,
+  slidesToShow: 3,
   slidesToScroll: 1,
   arrows: false,
   autoplay: true,
-  autoplaySpeed: 6000,
+  autoplaySpeed: 3000,
+  pauseOnHover: false,
 }
 
 //==========================================================================
@@ -62,16 +63,12 @@ export const HeroImage = () => {
       x => (
         <div
           css={{
-            paddingTop: "100px",
+            paddingTop: "50px",
             minWidth: "400px",
           }}
           key={x.image.localFile.childImageSharp.fluid.src}
         >
-          <Img
-            fluid={x.image.localFile.childImageSharp.fluid}
-            // imgStyle={{ maxWidth: "300px" }}
-            // css={{ height: "300px" }}
-          />
+          <Img fluid={x.image.localFile.childImageSharp.fluid} />
         </div>
       )
     )
@@ -88,12 +85,8 @@ export const HeroImage = () => {
       <div
         css={{
           margin: "0 auto",
-          // padding: "4em 2em",
-          // maxWidth: "940px",
+
           width: "100%",
-          // display: "grid",
-          // gridGap: "9em",
-          // gridTemplateColumns: "1fr 3fr",
         }}
       >
         <MainHeroImage />

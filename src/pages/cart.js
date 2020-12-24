@@ -226,7 +226,11 @@ const CartPage = () => {
               </Grid>
 
               <Link url={checkout}>
-                <Button sx={{ mt: 4, width: "100%" }} onClick={checkout}>
+                <Button
+                  variant="primary"
+                  sx={{ mt: 4, width: "100%" }}
+                  onClick={checkout}
+                >
                   Checkout
                 </Button>
               </Link>
