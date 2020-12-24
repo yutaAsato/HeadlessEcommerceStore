@@ -36,7 +36,7 @@ export const CartLogo = () => {
 
   return (
     <Link to="/cart" isButton>
-      <CartIcon />
+      <CartIcon style={{ color: "white" }} />
       {countMarkup}
     </Link>
   )

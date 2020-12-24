@@ -96,7 +96,7 @@ const navBarHead = [
   { title: "HOME", url: "/" },
   { title: "APPAREL", url: "/apparel" },
   { title: "STUDIO", url: "/studio" },
-  { title: "GALLERY", url: "/gallery" },
+  // { title: "GALLERY", url: "/gallery" },
   { title: "ABOUT", url: "/about" },
 ]
 
@@ -127,12 +127,16 @@ export const Header = ({ siteTitle }) => {
           </LogoWrapper>
         </LogoWrapperContainer>
 
-        <NavbarWrapper size={10}>
+        <NavbarWrapper size={10} style={{ paddingLeft: "50px" }}>
           <NavbarItems phone="phone" tablet="tablet">
             <UnorderedList>
               {navBarHead.map(nav => (
                 <Link to={nav.url} style={{ textDecoration: `none` }}>
-                  <div className="listWrapper" key={nav.title}>
+                  <div
+                    className="listWrapper"
+                    key={nav.title}
+                    style={{ paddingLeft: "20px" }}
+                  >
                     <Styled.li>{nav.title}</Styled.li>
                   </div>
                 </Link>

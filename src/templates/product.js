@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useMemo } from "react"
 import styled from "styled-components"
 
+import * as mq from "../components/layout/media-queries"
+
 import { Styled, jsx } from "theme-ui"
 import Img from "gatsby-image"
 import { Grid, Button, Alert, Close } from "@theme-ui/components"
@@ -40,10 +42,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
   console.log("productPage:", product)
   console.log("productPageContext:", pageContext)
 
-  // const colors = product.options.find(
-  //   option => option.name.toLowerCase() === "color"
-  // ).values
-
   let sizes
 
   if (pageContext.productType === "apparel") {
@@ -54,13 +52,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
   const variants = useMemo(() => prepareVariantsWithOptions(product.variants), [
     product.variants,
   ])
-
-  // const images = useMemo(() => prepareVariantsImages(variants, "color"), [
-  //   variants,
-  // ])
-  // if (images.length < 1) {
-  //   throw new Error("Must have at least one product image!")
-  // }
 
   const addItemToCart = useAddItemToCart()
   const [variant, setVariant] = useState(variants[0])
@@ -77,15 +68,6 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
     }
   }, [size, color, variants, variant.shopifyId])
 
-  // const gallery =
-  //   images.length > 1 ? (
-  //     <Grid gap={2} columns={6}>
-  //       {images.map(({ src, color }) => (
-  //         <Thumbnail key={color} src={src} onClick={() => setColor(color)} />
-  //       ))}
-  //     </Grid>
-  //   ) : null
-
   console.log("variant:", variant)
 
   //addToCart
@@ -96,68 +78,65 @@ const ProductPage = ({ data: { shopifyProduct: product }, pageContext }) => {
 
   return (
     <Layout>
-      {/* <SEO title={product.title} />
-      {addedToCartMessage ? (
-        <Alert sx={{ mb: 4 }} variant="primary">
-          {addedToCartMessage}
-          <Close
-            ml="auto"
-            mr={-2}
-            sx={{
-              "&:hover": {
-                cursor: "pointer",
-              },
-            }}
-            onClick={() => setAddedToCartMessage(null)}
+      <div
+        css={{
+          margin: "20px auto",
+          padding: "4em 2em",
+          maxWidth: "1140px",
+          width: "100%",
+          display: "grid",
+          gridGap: "9em",
+          gridTemplateColumns: "1fr 3fr",
+          [mq.small]: {
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "auto",
+            gridGap: "3em",
+            width: "100%",
+          },
+        }}
+      >
+        <div
+          css={{
+            minWidth: "600px",
+            [mq.small]: {
+              minWidth: "200px",
+            },
+          }}
+        >
+          <Img
+            fluid={product.variants[0].image.localFile.childImageSharp.fluid}
           />
-        </Alert>
-      ) : null} */}
+        </div>
 
-      <ProductPageContainer>
-        <Grid gap={2} columns={12}>
-          <ProductImageWrapper>
-            <ProductImageOverlay />
-            <ProductImage>
-              <Img
-                fluid={
-                  product.variants[0].image.localFile.childImageSharp.fluid
-                }
-              />
-            </ProductImage>
-          </ProductImageWrapper>
-
-          {/* {gallery} */}
-
-          <ProductDetailsContainer>
-            <Styled.h1 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h1>
-            <Styled.p
-              sx={{ pt: `40px` }}
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-            />
-            <div>
-              <Grid padding={2} columns={2}>
-                {pageContext.productType === "apparel" ? (
-                  <OptionPicker
-                    key="Size"
-                    name="Size"
-                    options={sizes}
-                    selected={size}
-                    onChange={event => setSize(event.target.value)}
-                  />
-                ) : null}
-              </Grid>
-            </div>
-            <div style={{ paddingTop: `20px` }}>
-              <Button
-                sx={{ margin: 2, display: "block" }}
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </Button>
-            </div>
-          </ProductDetailsContainer>
-        </Grid>
-      </ProductPageContainer>
+        <div>
+          <Styled.h4 sx={{ mt: 0, mb: 2 }}>{product.title}</Styled.h4>
+          <Styled.p
+            sx={{ pt: `40px` }}
+            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+          />
+          <div>
+            <Grid padding={2} columns={2}>
+              {pageContext.productType === "apparel" ? (
+                <OptionPicker
+                  key="Size"
+                  name="Size"
+                  options={sizes}
+                  selected={size}
+                  onChange={event => setSize(event.target.value)}
+                />
+              ) : null}
+            </Grid>
+          </div>
+          <div style={{ paddingTop: `20px` }}>
+            <Button
+              sx={{ margin: 2, display: "block" }}
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </Button>
+          </div>
+        </div>
+      </div>
     </Layout>
   )
 }
@@ -199,64 +178,4 @@ export const ProductPageQuery = graphql`
       }
     }
   }
-`
-
-//================================
-
-//styles
-
-const ProductPageContainer = styled.div`
-  padding-top: 8rem;
-`
-
-const ProductImageWrapper = styled.div`
-  grid-column: 3;
-
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* border-style: solid; */
-  position: relative;
-
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-    0 100px 80px rgba(0, 0, 0, 0.12);
-
-  min-height: 200px;
-  /* margin: 100px auto; */
-  background: white;
-  border-radius: 5px;
-`
-
-const ProductImageOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  pointer-events: none;
-
-  background-color: rgba(18, 34, 46, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  > div {
-    display: flex;
-    background-color: white;
-    border-radius: 50%;
-    padding: 6px;
-  }
-`
-
-const ProductImage = styled.div`
-  width: 600px;
-`
-
-const ProductDetailsContainer = styled.div`
-  /* padding-top: 8rem; */
-  grid-column: 6 / span 5;
 `
