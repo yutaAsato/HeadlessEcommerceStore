@@ -19,7 +19,7 @@ The cart logic is managed using React hooks and when the user clicks on the chec
 [![Screen-Shot-2021-01-11-at-11-22-56.png](https://i.postimg.cc/Kj5g1Yxv/Screen-Shot-2021-01-11-at-11-22-56.png)](https://postimg.cc/Wqh4KTdQ)
 [![Screen-Shot-2021-01-11-at-11-24-11.png](https://i.postimg.cc/3JSF1LQr/Screen-Shot-2021-01-11-at-11-24-11.png)](https://postimg.cc/D8GGyPzR)
 
-Along with the main navigation bar at the top, hamburger menu gives the user a secondary way to navigate the store. This component also acts as the primary navigation method when on mobile.
+Along with the main navigation bar at the top, the hamburger menu gives the user a secondary way to navigate the store. This component also acts as the primary navigation method when on mobile.
 
 [![Screen-Shot-2021-01-11-at-11-22-33.png](https://i.postimg.cc/901tvb4p/Screen-Shot-2021-01-11-at-11-22-33.png)](https://postimg.cc/QK9T7pJ9)
 [![Screen-Shot-2021-01-11-at-12-08-44.png](https://i.postimg.cc/yYrgGx6c/Screen-Shot-2021-01-11-at-12-08-44.png)](https://postimg.cc/56L2YxC2)
