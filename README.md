@@ -1,4 +1,4 @@
-## Shopify Headless Ecommerce Store
+# Shopify Headless Ecommerce Store
 
 A POC shopify headless ecommerce store built using Gatsby.js and React. GraphQL and the Shopify API are used to fetch product data from the backend which is managed with Shopify's CMS. Prismic.io is also used as a secondary CMS for home-page images. Offsite user account management and checkouts are handled with the Shopify API. Responsive design.
 
