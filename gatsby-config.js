@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -49,8 +53,8 @@ module.exports = {
     {
       resolve: `gatsby-theme-shopify-manager`,
       options: {
-        shopName: "noavailapparel.com",
-        accessToken: "c145643f84a63da1d9f45106fc068908",
+        shopName: process.env.SHOPIFY_STORE,
+        accessToken: process.env.SHOPIFY_TOKEN,
         // shouldIncludeSourcePlugin: false, // default
         // shouldWrapRootElementWithProvider: false, // default
       },
