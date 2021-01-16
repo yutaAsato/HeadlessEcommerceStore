@@ -47,12 +47,19 @@ export const ProductCard = products => {
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           [mq.small]: {
-            gridTemplateColumns: " 1fr",
+            gridTemplateColumns: "repeat(2, 1fr)",
           },
         }}
       >
         {products.products.map(product => (
-          <div css={{ padding: "20px", width: "350px", height: "400px" }}>
+          <div
+            css={{
+              padding: "20px",
+              width: "350px",
+              height: "400px",
+              [mq.small]: { width: "200px", height: "300px" },
+            }}
+          >
             <Link url={`/product/${product.handle}`}>
               {/* <ImageOverlay /> */}
               <div
